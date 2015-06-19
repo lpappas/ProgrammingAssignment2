@@ -1,5 +1,5 @@
-## The following 2 functions combined cache the inverse of a matrix.  This prevents unnecessary repetition of a costly 
-## compuatation.
+## The following 2 functions combined cache the inverse of a matrix.  This prevents unnecessary repetition of the inverse function 
+## which can be a costly compuatation.
 
 
 ## The makeCacheMatrix function caches the inverse of a matrix.
@@ -11,13 +11,13 @@
 
 makeCacheMatrix <- function(x = matrix()) {
         m <- NULL
-        set <- function(y) {
+        set <- function(y) {                                    ## 1.  stores a matrix in cache
                 x <<- y
                 m <<- NULL
         }
-        get <- function() x
-        setinverse <- function(inverse) m <<- inverse
-        getinverse <- function() m
+        get <- function() x                                     ## 2. gets a matrix from cache
+        setinverse <- function(inverse) m <<- inverse           ## 3. stores the inverse matrix in cache
+        getinverse <- function() m                              ## 4. get the inverse matrix from cache   
         list(set = set, get = get,
              setinverse = setinverse,
              getinverse = getinverse)
