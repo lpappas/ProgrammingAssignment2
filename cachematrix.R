@@ -1,3 +1,5 @@
+## Lea Pappas
+## June 19, 2015
 ## The following 2 functions combined cache the inverse of a matrix.  This prevents unnecessary repetition of the inverse function 
 ## which can be a costly compuatation.
 
