@@ -1,10 +1,10 @@
 ## Lea Pappas
 ## June 19, 2015
-## The following 2 functions combined cache the inverse of a matrix.  This prevents unnecessary repetition of the inverse function 
-## which can be a costly compuatation.
+## Purpose of the following 2 functions combined is to calculate and cache the inverse of a matrix.  This prevents unnecessary 
+## repetition of the inverse matrix function which can be a costly computation.
 
 
-## The makeCacheMatrix function caches the inverse of a matrix.
+## The makeCacheMatrix function provides the ability to cache a matrix and its inverse.
 ## It creates a special "vector", which is really a list of the following functions: 
 ## 1. stores a matrix in cache
 ## 2. gets a matrix from cache
@@ -13,13 +13,13 @@
 
 makeCacheMatrix <- function(x = matrix()) {
         m <- NULL
-        set <- function(y) {                                    ## 1.  stores a matrix in cache
+        set <- function(y) {                                    ## 1. Stores a matrix in cache
                 x <<- y
-                m <<- NULL
+                m <<- NULL                                      ## Resets the inverse matrix value when a new matrix is cached
         }
-        get <- function() x                                     ## 2. gets a matrix from cache
-        setinverse <- function(inverse) m <<- inverse           ## 3. stores the inverse matrix in cache
-        getinverse <- function() m                              ## 4. get the inverse matrix from cache   
+        get <- function() x                                     ## 2. Gets a matrix from cache
+        setinverse <- function(inverse) m <<- inverse           ## 3. Stores the inverse matrix in cache
+        getinverse <- function() m                              ## 4. Gets the inverse matrix from cache   
         list(set = set, get = get,
              setinverse = setinverse,
              getinverse = getinverse)
@@ -27,28 +27,25 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## The cacheSolve function computes the inverse of a matrix and stores this inverse in cache.
-## However, if this matrix is not new (has not changed from the cache value) and the inverse has already been calculated (the value is not NULL),
+## However, if the inverse has already been calculated (and the matrix has not changed),
 ## then this function will retrieve the inverse from the cache and skip the computation.
 ## This function assumes that the matrix supplied is always invertible.
 
-cacheSolve <- function(x, matrix_y, ...) {
-        data <- x$get()                                   ## Retrieves the original matrix stored in cache
+cacheSolve <- function(x, ...) {
         m <- x$getinverse()                               ## Retrieves the inverse matrix stored in cache
-        if (isTRUE(all.equal(data, matrix_y))){           ## IF the matrix supplied to this function matches the matrix stored in cache 
-                if(!is.null(m)) {                         ## AND the inverse has already been calculated
-                        message("getting cached data")    ## THEN simply return the cached inverse
-                        return(m)
-                }
-        }else{
-                message("new matrix")
-                x$set(matrix_y)                           ## The matrix supplied to this function is new, so store it in cache
-                data <- matrix_y
+        if(!is.null(m)) {                                 ## If the value is not null, this means the original matrix 
+                message("getting cached data")            ## has not changed and the inverse matrix is valid
+                return(m)                                 ## Returns the cached inverse matrix
         }
-        
-        m <- solve(data, ...)                             ## Calcuate the inverse of the new or cached matrix
-        x$setinverse(m)                                   ## Store the inverse matrix in cache
+ 
+        data <- x$get()                                   ## Retrieves the matrix stored in cache       
+        m <- solve(data, ...)                             ## Calcuates the inverse of this matrix
+        x$setinverse(m)                                   ## Stores the inverse matrix in cache
         m
 }
+
+
+
 
 
 
