@@ -1,4 +1,5 @@
 ## Lea Pappas
+## Coursera - R Programming course
 ## June 19, 2015
 ## Purpose of the following 2 functions combined is to calculate and cache the inverse of a matrix.  This prevents unnecessary 
 ## repetition of the inverse matrix function which can be a costly computation.
